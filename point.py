@@ -30,7 +30,7 @@ class Point:
         x3 = m*m - x2 - x1
         y3 = m*(x3 - x1) + y1
 
-        return Point(x3, y3, self.curve)
+        return Point(x3, -y3, self.curve)
 
     def __sub__(self, Q):
         return self + -Q

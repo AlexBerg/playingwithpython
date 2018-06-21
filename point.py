@@ -35,6 +35,30 @@ class Point:
     def __sub__(self, Q):
         return self + -Q
 
+    def __mul__(self, n):
+        if not isinstance(n, int):
+            raise Exception("Can't scale with non-integers")
+        else:
+            if n < 0:
+                return -self * n
+            if n == 0:
+                return IdealPoint(self.curve)
+            else:
+                Q = self
+                R = self if n & 1 == 1 else IdealPoint(self.curve)
+
+                i = 2
+                while i <= n:
+                    Q = Q + Q
+
+                    if n & i == 1:
+                        R = Q + R
+
+                    i << 1
+            return R
+
+    def __rmul__(self, n):
+        return self * n
 
 
 class IdealPoint(Point):
@@ -49,3 +73,9 @@ class IdealPoint(Point):
 
     def __add__(self, Q):
         return Q
+
+    def __mul__(self, n):
+        if not isinstance(n, int):
+            raise Exception("Can't scale with non-integers")
+        else:
+            return self

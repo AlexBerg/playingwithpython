@@ -35,6 +35,10 @@ class Curve:
     def G(self):
         return Point(self.gx, self.gy, self)
 
+    @property
+    def P(self):
+        return self.p
+
 
 # NIST-Curves
 P192 = Curve(

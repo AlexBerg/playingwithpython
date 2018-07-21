@@ -17,8 +17,19 @@ class Elgamal:
         else:
             return (self.curve, self.public)
 
-    @classmethod
     def generateKey(self):
-        self.secret = secrets.randbelow(self.curve.p - 1)
+        self.secret = secrets.randbelow(self.curve.P - 1)
         self.public = self.curve.G * self.secret
-        return True
+        return (self.public, self.curve.P, self.curve.G)
+
+    def encrypt(self, msg, pub, g, p):
+        pt = g * msg
+        r = secrets.randbelow(p - 1)
+        p1 = g * r
+        p2 = pt + (pub * r)
+        return (p1, p2)
+
+    def decrypt(self, cipher):
+        c = cipher[0] * self.secret
+        msg = cipher[1] - c
+        return msg

@@ -1,5 +1,6 @@
-from .curve import Curve
+from curves import Curve
 import secrets
+
 
 class Elgamal:
     def __init__(self, curve):
@@ -20,7 +21,7 @@ class Elgamal:
     def generateKey(self):
         self.secret = secrets.randbelow(self.curve.P - 1)
         self.public = self.curve.G * self.secret
-        return (self.public, self.curve.P, self.curve.G)
+        return (self.public, self.curve.G, self.curve.P)
 
     def encrypt(self, msg, pub, g, p):
         pt = g * msg

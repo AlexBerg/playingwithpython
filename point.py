@@ -5,7 +5,7 @@ class Point:
         self.curve = curve
 
         if not curve.pointOnCurve(x, y):
-            raise Exception("Point %s is not on the curve %s" % (self, curve))
+            raise Exception("Point %s is not on the curve %s" % ((x, y), curve.Name))
 
     def __neg__(self):
         return Point(self.x, -self.y, self.curve)
@@ -20,7 +20,7 @@ class Point:
             if(y1 == 0):
                 return IdealPoint(self.curve)
 
-            m = (3 * x1 * x1 + self.curve.a) / (2 * y1)
+            m = ((3 * (x1 * x1)) + self.curve.a) / (2 * y1)
         else:
             if x1 == x2:
                 return IdealPoint(self.curve)

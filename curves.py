@@ -1,4 +1,4 @@
-from .point import Point
+from point import Point
 
 
 class Curve:
@@ -25,7 +25,9 @@ class Curve:
         self._curve_lookup[cid] = self
 
     def pointOnCurve(self, x, y):
-        return y*y == (x*x*x + self.a*x + self.b)
+        left = y * y
+        right = (x * x * x) + (self.a * x) + self.b
+        return (left - right) % self.p == 0
 
     @classmethod
     def get_Curve(cls, cid):
@@ -38,6 +40,10 @@ class Curve:
     @property
     def P(self):
         return self.p
+
+    @property
+    def Name(self):
+        return self.name
 
 
 # NIST-Curves

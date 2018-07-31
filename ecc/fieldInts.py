@@ -1,7 +1,13 @@
+from utilities import FieldElement
+
+
 def FieldInts(p):
-    class FieldInt():
+    class FieldInt(FieldElement):
         def __init__(self, n):
-            self.n = n % p
+            try:
+                self.n = int(n) % p
+            except Exception:
+                raise TypeError('Can not cast %s to int' % (type(n).__name__))
             self.field = FieldInt
 
         def __add__(self, other):

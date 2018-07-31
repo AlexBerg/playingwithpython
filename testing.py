@@ -1,3 +1,6 @@
+import sys
+sys.path.append('ecc')
+
 from elgamal import Elgamal
 from curves import P192
 

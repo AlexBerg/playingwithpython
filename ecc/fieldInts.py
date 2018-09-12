@@ -23,7 +23,7 @@ def FieldInts(p):
         def __neg__(self):
             return FieldInt(-self.n)
         def __eq__(self, other):
-            return isinstance(other, FieldInt) and self
+            return isinstance(other, FieldInt) and self.n == other.n
         def __abs__(self):
             return abs(self.n)
         def __str__(self):

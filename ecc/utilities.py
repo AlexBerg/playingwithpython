@@ -30,7 +30,7 @@ class FieldElement(DomainElement):
     def __truediv__(self, other):
         return self * other.inverse()
     def __rtruediv__(self, other):
-        return self.inverse() * other
+        return self.inverse() * other # pylint: disable=no-member
     def __div__(self, other):
         return self.__truediv__(other)
     def __rdiv__(self, other):

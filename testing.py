@@ -1,9 +1,6 @@
-import sys
-sys.path.append('ecc')
-
-from elgamal import Elgamal
-from curves import P192
-from fieldInts import FieldInts
+from ecc.elgamal import Elgamal
+from ecc.curves import P192
+from ecc.fieldInts import FieldInts
 
 
 def testElgamal():

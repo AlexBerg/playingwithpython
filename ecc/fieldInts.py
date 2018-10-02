@@ -1,6 +1,9 @@
-from utilities import FieldElement
+from utilities import *
 
+class _Modular(FieldElement):
+    NotImplemented
 
+@memoize
 def FieldInts(p):
     class FieldInt(FieldElement):
         def __init__(self, n):

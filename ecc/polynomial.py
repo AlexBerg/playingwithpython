@@ -37,6 +37,30 @@ def polynomials(field=Fraction):
         def isZero(self):
             return self.coefficients == []
 
+        def __repr__(self):
+            if self.isZero():
+                return '0'
+
+            return ' + '.join(['%s xˆ%d' % (a, i) if i > 0 else '%s' % a for a, i in enumerate(self.coefficients)])
+
+        def __abs__(self): 
+            return len(self.coefficients)
+        def __len__(self):
+            return len(self.coefficients)
+        def __sub__(self, other):
+            return self + (-other)
+        def __iter__(self):
+            return iter(self.coefficients)
+        def __neg__(self):
+            return Polynomial([-a for a in self.coefficients])
+
+        def iter(self):
+            return self.__iter__()
+        def leadingCoefficient(self):
+            return self.coefficients[-1]
+        def degree(self):
+            return abs(self) - 1
+
     def Zero():
         return Polynomial([])
 

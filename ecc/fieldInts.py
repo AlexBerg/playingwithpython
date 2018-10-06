@@ -13,18 +13,24 @@ def FieldInts(p):
                 raise TypeError('Can not cast %s to int' % (type(n).__name__))
             self.field = FieldInt
 
+        @typecheck
         def __add__(self, other):
             return FieldInt(self.n + other.n)
+        @typecheck
         def __sub__(self, other):
             return FieldInt(self.n - other.n)
+        @typecheck
         def __mul__(self, other):
             return FieldInt(self.n * other.n)
+        @typecheck
         def __truediv__(self, other):
             return self * other.inverse()
+        @typecheck
         def __div__(self, other):
             return self * other.inverse()
         def __neg__(self):
             return FieldInt(-self.n)
+        @typecheck
         def __eq__(self, other):
             return isinstance(other, FieldInt) and self.n == other.n
         def __abs__(self):
@@ -34,6 +40,7 @@ def FieldInts(p):
         def __repr__(self):
             return '%d (mod %d)' % (self.n, self.p)
 
+        @typecheck
         def __divmod__(self, divisor):
             q, r = divmod(self.n, divisor.n)
             return (FieldInt(q), FieldInt(r))

@@ -1,3 +1,4 @@
+import itertools
 from utilities import *
 from fractions import Fraction
 
@@ -60,6 +61,26 @@ def polynomials(field=Fraction):
             return self.coefficients[-1]
         def degree(self):
             return abs(self) - 1
+
+        @typecheck
+        def __eq__(self, other):
+            return self.degree == other.degree and all([x==y for x,y in zip(self, other)])
+        @typecheck
+        def __add__(self, other):
+            newCoeffs = [sum(x) for x in itertools.zip_longest(self, other, fillvalue=self.field(0))]
+            return Polynomial(newCoeffs)
+        @typecheck
+        def __mul__(self, other):
+            if self.isZero() or other.isZero():
+                return Zero()
+            
+            newCoeffs = [self.field(0) for _ in range(len(self) + len(other) - 1)]
+            for i,a in enumerate(self):
+                for j,b in enumerate(other):
+                    newCoeffs[i+j] += a*b
+            
+            return Polynomial(newCoeffs)
+
 
     def Zero():
         return Polynomial([])

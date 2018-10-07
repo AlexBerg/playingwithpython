@@ -64,7 +64,7 @@ def polynomials(field=Fraction):
 
         @typecheck
         def __eq__(self, other):
-            return self.degree == other.degree and all([x==y for x,y in zip(self, other)])
+            return self.degree() == other.degree() and all([x==y for x,y in zip(self, other)])
         @typecheck
         def __add__(self, other):
             newCoeffs = [sum(x) for x in itertools.zip_longest(self, other, fillvalue=self.field(0))]
@@ -86,4 +86,5 @@ def polynomials(field=Fraction):
         return Polynomial([])
 
     Polynomial.field = field
+    Polynomial.__name__ = '%s[x]' % field.__name__
     return Polynomial

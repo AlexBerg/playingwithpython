@@ -80,6 +80,9 @@ def polynomials(field=Fraction):
                     newCoeffs[i+j] += a*b
             
             return Polynomial(newCoeffs)
+        @typecheck
+        def __divmod__(self, other):
+            raise NotImplementedError()
 
 
     def Zero():

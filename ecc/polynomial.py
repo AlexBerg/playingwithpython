@@ -6,11 +6,11 @@ from fractions import Fraction
 def strip(L, z):
     if len(L) == 0:
         return L
-    
+
     i = len(L) - 1
     while i >= 1 and L[i] == z:
         i -= 1
-    
+
     return L[:i+1]
 
 @memoize
@@ -34,7 +34,7 @@ def polynomials(field=Fraction):
                 self.coefficients = c
 
             self.coefficients = strip(self.coefficients, field(0))
-        
+
         def isZero(self):
             return self.coefficients == []
 
@@ -44,7 +44,7 @@ def polynomials(field=Fraction):
 
             return ' + '.join(['%s xˆ%d' % (a, i) if i > 0 else '%s' % a for a, i in enumerate(self.coefficients)])
 
-        def __abs__(self): 
+        def __abs__(self):
             return len(self.coefficients)
         def __len__(self):
             return len(self.coefficients)
@@ -73,16 +73,29 @@ def polynomials(field=Fraction):
         def __mul__(self, other):
             if self.isZero() or other.isZero():
                 return Zero()
-            
+
             newCoeffs = [self.field(0) for _ in range(len(self) + len(other) - 1)]
             for i,a in enumerate(self):
                 for j,b in enumerate(other):
                     newCoeffs[i+j] += a*b
-            
+
             return Polynomial(newCoeffs)
         @typecheck
-        def __divmod__(self, other):
-            raise NotImplementedError()
+        def __divmod__(self, divisor):
+            if divisor.isZero():
+                raise ZeroDivisionError()
+            quotient, remainder = Zero(), self
+            divisorDegree = divisor.degree()
+            divisorLC = divisor.leadingCoefficient()
+            while remainder.degree() >= divisorDegree:
+                monomialExponent = remainder.degree() - divisorDegree
+                monomialZeroes = [self.field(0) for _ in range(monomialExponent)]
+                monomialDivisor = Polynomial(monomialZeroes + [remainder.leadingCoefficient() / divisorLC])
+
+                quotient += monomialDivisor
+                remainder -= monomialDivisor * divisor
+
+            return quotient, remainder
 
 
     def Zero():

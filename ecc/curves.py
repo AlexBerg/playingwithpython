@@ -1,4 +1,5 @@
-from point import Point
+import ecc.point as points
+import ecc.mods as mods
 
 
 class Curve:
@@ -14,20 +15,21 @@ class Curve:
     """
 
     def __init__(self, name, p, a, b, n, gx, gy, cid):
+        modp = mods.Mod(p)
         self.name = name
         self.p = p
-        self.a = a
-        self.b = b
+        self.a = modp(a)
+        self.b = modp(b)
         self.n = n
-        self.gx = gx
-        self.gy = gy
+        self.gx = modp(gx)
+        self.gy = modp(gy)
         self.cid = cid
         self._curve_lookup[cid] = self
 
     def pointOnCurve(self, x, y):
         left = y * y
         right = (x * x * x) + (self.a * x) + self.b
-        return (left - right) % self.p == 0
+        return left == right
 
     @classmethod
     def get_Curve(cls, cid):
@@ -35,7 +37,10 @@ class Curve:
 
     @property
     def G(self):
-        return Point(self.gx, self.gy, self)
+        print("fetching g")
+        g = points.Point(self.gx, self.gy, self)
+        print("gots g")
+        return g
 
     @property
     def P(self):

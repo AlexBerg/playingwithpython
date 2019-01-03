@@ -1,27 +1,28 @@
-from utilities import *
+import ecc
+from ecc.utilities import *
 
 class _Modular(FieldElement):
     NotImplemented
 
 @memoize
-def FieldInts(p):
-    class FieldInt(FieldElement):
+def Mod(p):
+    class ModP(FieldElement):
         def __init__(self, n):
             try:
                 self.n = int(n) % p
             except Exception:
                 raise TypeError('Can not cast %s to int' % (type(n).__name__))
-            self.field = FieldInt
+            self.field = ModP
 
         @typecheck
         def __add__(self, other):
-            return FieldInt(self.n + other.n)
+            return ModP(self.n + other.n)
         @typecheck
         def __sub__(self, other):
-            return FieldInt(self.n - other.n)
+            return ModP(self.n - other.n)
         @typecheck
         def __mul__(self, other):
-            return FieldInt(self.n * other.n)
+            return ModP(self.n * other.n)
         @typecheck
         def __truediv__(self, other):
             return self * other.inverse()
@@ -29,10 +30,10 @@ def FieldInts(p):
         def __div__(self, other):
             return self * other.inverse()
         def __neg__(self):
-            return FieldInt(-self.n)
+            return ModP(-self.n)
         @typecheck
         def __eq__(self, other):
-            return isinstance(other, FieldInt) and self.n == other.n
+            return isinstance(other, ModP) and self.n == other.n
         def __abs__(self):
             return abs(self.n)
         def __str__(self):
@@ -43,15 +44,15 @@ def FieldInts(p):
         @typecheck
         def __divmod__(self, divisor):
             q, r = divmod(self.n, divisor.n)
-            return (FieldInt(q), FieldInt(r))
+            return (ModP(q), ModP(r))
 
         def inverse(self):
             x, y, d = euclideanAlgorithm(self.n, self.p)
-            return FieldInt(x)
+            return ModP(x)
 
-    FieldInt.p = p
-    FieldInt.__name__ = 'Z/%d' % (p)
-    return FieldInt
+    ModP.p = p
+    ModP.__name__ = 'Z/%d' % (p)
+    return ModP
 
 
 def euclideanAlgorithm(a, b):

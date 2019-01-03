@@ -1,10 +1,10 @@
-from curves import Curve
+import ecc.curves as curves
 import secrets
 
 
 class Elgamal:
     def __init__(self, curve):
-        if not isinstance(curve, Curve):
+        if not isinstance(curve, curves.Curve):
             raise Exception("curve must be instance of Curve")
         else:
             self.curve = curve
@@ -20,7 +20,9 @@ class Elgamal:
 
     def generateKey(self):
         self.secret = secrets.randbelow(self.curve.P - 1)
+        print("Have secret")
         self.public = self.curve.G * self.secret
+        print("Have public!")
         return (self.public, self.curve.G, self.curve.P)
 
     def encrypt(self, msg, pub, g, p):

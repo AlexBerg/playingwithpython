@@ -20,10 +20,8 @@ class Elgamal:
 
     def generateKey(self):
         self.secret = secrets.randbelow(self.curve.P - 1)
-        print("Have secret")
         self.public = self.curve.G * self.secret
-        print("Have public!")
-        return (self.public, self.curve.G, self.curve.P)
+        return self.public
 
     def encrypt(self, msg, pub, g, p):
         pt = g * msg

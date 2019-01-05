@@ -54,7 +54,7 @@ class Point:
                     if n & i == 1:
                         R = Q + R
 
-                    i << 1
+                    i = i << 1
             return R
 
     def __rmul__(self, n):

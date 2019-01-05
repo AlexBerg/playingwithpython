@@ -37,9 +37,7 @@ class Curve:
 
     @property
     def G(self):
-        print("fetching g")
         g = points.Point(self.gx, self.gy, self)
-        print("gots g")
         return g
 
     @property

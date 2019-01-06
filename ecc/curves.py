@@ -47,6 +47,12 @@ class Curve:
     @property
     def Name(self):
         return self.name
+    
+    def getNumberAsCurvePoint(self, num):
+        if not isinstance(num, int):
+            raise Exception("Must be an integer!")
+        point = self.G * num
+        return point
 
 
 # NIST-Curves

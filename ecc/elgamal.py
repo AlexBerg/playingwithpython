@@ -20,7 +20,7 @@ class Elgamal:
 
     def generateKey(self):
         self.secret = secrets.randbelow(self.curve.P - 1)
-        self.public = self.curve.G * self.secret
+        self.public = self.curve.getNumberAsCurvePoint(self.secret)
         return self.public
 
     def encrypt(self, msg, pub, g, p):

@@ -9,7 +9,7 @@ def testElgamal():
     pub = el.generateKey()
     cipher = el.encrypt(clr, pub, P192.G, P192.P)
     decrypted = el.decrypt(cipher)
-    clrpoint = P192.G * clr
+    clrpoint = P192.getNumberAsCurvePoint(clr)
     if decrypted.x == clrpoint.x and decrypted.y == clrpoint.y:
         return True
     else:

@@ -47,6 +47,10 @@ class Curve:
     @property
     def Name(self):
         return self.name
+
+    @property
+    def Zero(self):
+        return self.G * 0
     
     def getNumberAsCurvePoint(self, num):
         if not isinstance(num, int):

@@ -1,6 +1,22 @@
 from ecc.elgamal import Elgamal
 from ecc.curves import P192
 from ecc.mods import Mod
+from ecc.innercircle import InnerCircle
+
+
+def testInnerCircle():
+    el = Elgamal(P192)
+    pub = el.generateKey()
+
+    inner = InnerCircle(7, 5, el.publicKey)
+
+    pointX = el.encrypt(3, pub, P192.G, P192.P)
+    pointY = el.encrypt(6, pub, P192.G, P192.P)
+
+    result = inner.getDistanceList(pointX, pointY, pointX * 3, pointY * 6, 5)
+
+    return any(el.decrypt(r) == P192.Zero for r in result)
+
 
 
 def testElgamal():
@@ -10,7 +26,7 @@ def testElgamal():
     cipher = el.encrypt(clr, pub, P192.G, P192.P)
     decrypted = el.decrypt(cipher)
     clrpoint = P192.getNumberAsCurvePoint(clr)
-    if decrypted.x == clrpoint.x and decrypted.y == clrpoint.y:
+    if decrypted == clrpoint:
         return True
     else:
         return False
@@ -37,3 +53,9 @@ if __name__ == "__main__":
         print("Elgamal Success")
     else:
         print("Elgamal Failed")
+
+    result = testInnerCircle()
+    if result:
+        print("InnerCircle Success")
+    else:
+        print("InnerCircle Failed")

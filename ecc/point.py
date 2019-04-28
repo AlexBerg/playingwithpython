@@ -60,6 +60,9 @@ class Point:
     def __rmul__(self, n):
         return self * n
 
+    def __eq__(self, Q):
+        return self.x == Q.x and self.y == Q.y
+
 
 class IdealPoint(Point):
     def __init__(self, curve):

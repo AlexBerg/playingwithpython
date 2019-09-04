@@ -1,4 +1,5 @@
 from ecc.elgamal import Elgamal
+from ecc.point import Point
 
 class InnerCircle: 
     def __init__(self, qx, qy, pubKey):
@@ -20,8 +21,14 @@ class InnerCircle:
         qxSquared = self.qxPoint * self.qx
         qySquared = self.qyPoint * self.qy
 
-        xValues = pxSquared + qxSquared - ((px * self.qx) * 2) # pxˆ2 + qxˆ2 - 2pxqx
-        yValues = pySquared + qySquared - ((py * self.qy) * 2) # pyˆ2 + qyˆ2 - 2pyqy
+        combX = (pxSquared[0] + qxSquared[0], pxSquared[1] + qxSquared[1])
+        combY = (pySquared[0] + qySquared[0], pySquared[1] + qySquared[1])
+
+        pxqx = (px[0] * self.qx * 2, px[1] * self.qx * 2)
+        pyqy = (py[0] * self.qy * 2, py[1] * self.qy * 2)
+
+        xValues = (combX[0] - pxqx[0], combX[1] - pxqx[1]) # pxˆ2 + qxˆ2 - 2pxqx
+        yValues = (combY[0] - pyqy[0], combY[1] - pyqy[1]) # pyˆ2 + qyˆ2 - 2pyqy
 
         return xValues + yValues
 

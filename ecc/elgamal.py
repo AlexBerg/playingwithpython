@@ -1,5 +1,6 @@
 import ecc.curves as curves
 import secrets
+import ecc.point as point
 
 
 class Elgamal:

@@ -82,3 +82,8 @@ class IdealPoint(Point):
             raise Exception("Can't scale with non-integers")
         else:
             return self
+    
+    def __eq__(self, Q):
+        if isinstance(Q, IdealPoint):
+            return True
+        return False

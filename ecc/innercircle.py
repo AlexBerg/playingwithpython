@@ -1,6 +1,8 @@
 from ecc.elgamal import Elgamal
 from ecc.point import Point
 
+# All encrypted points are actually two value tuples (v1, v2)
+# This means all calculations need to be done as (p[0] + p[0], p[1] + p[1]) etc
 class InnerCircle: 
     def __init__(self, qx, qy, pubKey):
         self.qx = qx
@@ -13,13 +15,13 @@ class InnerCircle:
         self.key = key
         self.curve = curve
 
-        self.qxPoint = elgamal.encrypt(qx, key, curve.G, curve.P)
-        self.qyPoint = elgamal.encrypt(qy, key, curve.G, curve.P)
+        self.qxTuple = elgamal.encrypt(qx, key, curve.G, curve.P)
+        self.qyTuple = elgamal.encrypt(qy, key, curve.G, curve.P)
         
 
     def distance(self, px, py, pxSquared, pySquared):
-        qxSquared = self.qxPoint * self.qx
-        qySquared = self.qyPoint * self.qy
+        qxSquared = self.multiplePointTuple(self.qxTuple, self.qx)
+        qySquared = self.multiplePointTuple(self.qyTuple, self.qy)
 
         combX = (pxSquared[0] + qxSquared[0], pxSquared[1] + qxSquared[1])
         combY = (pySquared[0] + qySquared[0], pySquared[1] + qySquared[1])
@@ -40,11 +42,14 @@ class InnerCircle:
 
         while d < squared:
             point = self.elgamal.encrypt(d, self.key, self.curve.G, self.curve.P)
-            diff = point - dist
+            diff = (point[0] - dist[0], point[1] - dist[1])
             result.append(diff)
             d += 1
         
         return result
+
+    def multiplePointTuple(self, tuple, num):
+        return (tuple[0] * num, tuple[1] * num)
 
 
 

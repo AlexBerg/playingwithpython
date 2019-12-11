@@ -33,7 +33,7 @@ class InnerCircle:
         xValues = (combX[0] - pxqx[0], combX[1] - pxqx[1]) # pxˆ2 + qxˆ2 - 2pxqx
         yValues = (combY[0] - pyqy[0], combY[1] - pyqy[1]) # pyˆ2 + qyˆ2 - 2pyqy
 
-        return xValues + yValues
+        return (xValues[0] + yValues[0], xValues[1] + yValues[1])
 
     def getDistanceList(self, px, py, pxSquared, pySquared, r):
         dist = self.distance(px, py, pxSquared, pySquared)

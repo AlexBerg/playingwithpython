@@ -1,5 +1,6 @@
 from ecc.elgamal import Elgamal
 from ecc.point import Point
+from ecc.utilities import multiplePointTuple
 
 # All encrypted points are actually two value tuples (v1, v2)
 # This means all calculations need to be done as (p[0] + p[0], p[1] + p[1]) etc
@@ -20,8 +21,8 @@ class InnerCircle:
         
 
     def distance(self, px, py, pxSquared, pySquared):
-        qxSquared = self.multiplePointTuple(self.qxTuple, self.qx)
-        qySquared = self.multiplePointTuple(self.qyTuple, self.qy)
+        qxSquared = multiplePointTuple(self.qxTuple, self.qx)
+        qySquared = multiplePointTuple(self.qyTuple, self.qy)
 
         combX = (pxSquared[0] + qxSquared[0], pxSquared[1] + qxSquared[1])
         combY = (pySquared[0] + qySquared[0], pySquared[1] + qySquared[1])
@@ -47,9 +48,6 @@ class InnerCircle:
             d += 1
         
         return result
-
-    def multiplePointTuple(self, tuple, num):
-        return (tuple[0] * num, tuple[1] * num)
 
 
 

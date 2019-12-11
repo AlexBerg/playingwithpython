@@ -54,3 +54,7 @@ class FieldElement(DomainElement):
         return self.__truediv__(other)
     def __rdiv__(self, other):
         return self.__rtruediv__(other)
+
+# For multiplying a tuple with a number the way you would multiply a point with a number
+def multiplePointTuple(tuple, num):
+        return (tuple[0] * num, tuple[1] * num)

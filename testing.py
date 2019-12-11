@@ -2,6 +2,7 @@ from ecc.elgamal import Elgamal
 from ecc.curves import P192
 from ecc.mods import Mod
 from ecc.innercircle import InnerCircle
+from ecc.utilities import multiplePointTuple
 import unittest
 
 class Test(unittest.TestCase):    
@@ -33,7 +34,10 @@ def testInnerCircle():
     pointX = el.encrypt(3, pub, P192.G, P192.P)
     pointY = el.encrypt(6, pub, P192.G, P192.P)
 
-    result = inner.getDistanceList(pointX, pointY, pointX * 3, pointY * 6, 5)
+    pointXSquare = multiplePointTuple(pointX, 3)
+    pointYSquare = multiplePointTuple(pointY, 6)
+
+    result = inner.getDistanceList(pointX, pointY, pointXSquare, pointYSquare, 5)
 
     return any(el.decrypt(r) == P192.Zero for r in result)
 

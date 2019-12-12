@@ -57,4 +57,10 @@ class FieldElement(DomainElement):
 
 # For multiplying a tuple with a number the way you would multiply a point with a number
 def multiplePointTuple(tuple, num):
-        return (tuple[0] * num, tuple[1] * num)
+    return (tuple[0] * num, tuple[1] * num)
+
+def addTuple(t1, t2):
+    return (t1[0] + t2[0], t1[1] + t2[1])
+
+def substractTuple(t1, t2):
+    return (t1[0] - t2[0], t1[1] - t2[1])

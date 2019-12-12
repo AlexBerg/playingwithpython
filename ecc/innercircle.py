@@ -16,13 +16,13 @@ class InnerCircle:
         self.key = key
         self.curve = curve
 
-        self.qxTuple = elgamal.encrypt(qx, key, curve.G, curve.P)
-        self.qyTuple = elgamal.encrypt(qy, key, curve.G, curve.P)
+        self.qxEncrypted = elgamal.encrypt(qx, key, curve.G, curve.P)
+        self.qyEncrypted = elgamal.encrypt(qy, key, curve.G, curve.P)
         
 
     def distance(self, px, py, pxSquared, pySquared):
-        qxSquared = multiplePointTuple(self.qxTuple, self.qx)
-        qySquared = multiplePointTuple(self.qyTuple, self.qy)
+        qxSquared = multiplePointTuple(self.qxEncrypted, self.qx)
+        qySquared = multiplePointTuple(self.qyEncrypted, self.qy)
 
         combX = addTuple(pxSquared, qxSquared)
         combY = addTuple(pySquared, qySquared)

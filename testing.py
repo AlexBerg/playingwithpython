@@ -10,7 +10,7 @@ class Test(unittest.TestCase):
         el = Elgamal(P192)
         clr = 7
         pub = el.generateKey()
-        cipher = el.encrypt(clr, pub, P192.G, P192.P)
+        cipher = el.encrypt(clr, pub, P192.G, P192.N)
         decrypted = el.decrypt(cipher)
         clrpoint = P192.getNumberAsCurvePoint(clr)
 
@@ -22,24 +22,26 @@ class Test(unittest.TestCase):
         self.assertEqual(result, mod7(2), "Should be 2 mod 7")
 
     def test_inner(self):
-        self.assertTrue(testInnerCircle(), "Should be true")
+        self.assertTrue(testInnerCircleDistance(), "Should be true")
 
 
-def testInnerCircle():
+def testInnerCircleDistance():
     el = Elgamal(P192)
     pub = el.generateKey()
 
     inner = InnerCircle(7, 5, el.publicKey)
 
-    pointX = el.encrypt(3, pub, P192.G, P192.P)
-    pointY = el.encrypt(6, pub, P192.G, P192.P)
+    pointX = el.encrypt(3, pub, P192.G, P192.N)
+    pointY = el.encrypt(6, pub, P192.G, P192.N)
 
     pointXSquare = multiplePointTuple(pointX, 3)
     pointYSquare = multiplePointTuple(pointY, 6)
 
-    result = inner.getDistanceList(pointX, pointY, pointXSquare, pointYSquare, 5)
+    result = inner.distance(pointX, pointY, pointXSquare, pointYSquare)
 
-    return any(el.decrypt(r) == P192.Zero for r in result)
+    dist = P192.getNumberAsCurvePoint(17)
+
+    return el.decrypt(result) == dist 
 
 
 

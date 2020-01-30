@@ -16,8 +16,8 @@ class InnerCircle:
         self.key = key
         self.curve = curve
 
-        self.qxEncrypted = elgamal.encrypt(qx, key, curve.G, curve.P)
-        self.qyEncrypted = elgamal.encrypt(qy, key, curve.G, curve.P)
+        self.qxEncrypted = elgamal.encrypt(qx, key, curve.G, curve.N)
+        self.qyEncrypted = elgamal.encrypt(qy, key, curve.G, curve.N)
         
 
     def distance(self, px, py, pxSquared, pySquared):
@@ -41,8 +41,8 @@ class InnerCircle:
         d = 0
         result = []
 
-        while d < squared:
-            point = self.elgamal.encrypt(d, self.key, self.curve.G, self.curve.P)
+        while d <= squared:
+            point = self.elgamal.encrypt(d, self.key, self.curve.G, self.curve.N)
             diff = substractTuple(point, dist)
             result.append(diff)
             d += 1

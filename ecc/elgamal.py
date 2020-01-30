@@ -20,13 +20,13 @@ class Elgamal:
             return (self.curve, self.public)
 
     def generateKey(self):
-        self.secret = secrets.randbelow(self.curve.P - 1)
+        self.secret = secrets.randbelow(self.curve.N - 1)
         self.public = self.curve.getNumberAsCurvePoint(self.secret)
         return self.public
 
-    def encrypt(self, msg, pub, g, p):
+    def encrypt(self, msg, pub, g, n):
         pt = g * msg
-        r = secrets.randbelow(p - 1)
+        r = secrets.randbelow(n - 1)
         p1 = g * r
         p2 = pt + (pub * r)
         return (p1, p2)

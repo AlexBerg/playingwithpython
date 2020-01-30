@@ -43,6 +43,10 @@ class Curve:
     @property
     def P(self):
         return self.p
+    
+    @property
+    def N(self):
+        return self.n
 
     @property
     def Name(self):
@@ -57,6 +61,14 @@ class Curve:
             raise Exception("Must be an integer!")
         point = self.G * num
         return point
+
+    def getCurvePointAsNumber(self, point):
+        i = 0
+        while(i < self.N):
+            if(self.G * i == point):
+                break
+            i += 1
+        return i
 
 
 # NIST-Curves

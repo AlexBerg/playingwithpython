@@ -4,8 +4,9 @@ from ecc.mods import Mod
 from ecc.innercircle import InnerCircle
 from ecc.utilities import multiplePointTuple
 import unittest
+from collections import namedtuple
 
-class Test(unittest.TestCase):    
+class Test(unittest.TestCase):
     def test_elgamal(self):
         el = Elgamal(P192)
         clr = 7
@@ -23,9 +24,24 @@ class Test(unittest.TestCase):
 
     def test_inner(self):
         self.assertTrue(testInnerCircleDistance(), "Should be true")
+        self.assertTrue(testInnerCircle(), "Should be true")
 
 
 def testInnerCircleDistance():
+    var = getInnerCircleVariables()
+
+    result = var.inner.distance(var.px, var.py, var.px2, var.py2)
+
+    dist = P192.getNumberAsCurvePoint(17) # the distance^2 between these points is 17
+
+    return var.el.decrypt(result) == dist
+
+def testInnerCircle():
+    var = getInnerCircleVariables()
+    result = var.inner.getDistanceList(var.px, var.py, var.px2, var.py2, 5)
+    return any(P192.Zero == var.el.decrypt(r) for r in result)
+
+def getInnerCircleVariables():
     el = Elgamal(P192)
     pub = el.generateKey()
 
@@ -37,13 +53,9 @@ def testInnerCircleDistance():
     pointXSquare = multiplePointTuple(pointX, 3)
     pointYSquare = multiplePointTuple(pointY, 6)
 
-    result = inner.distance(pointX, pointY, pointXSquare, pointYSquare)
+    tup = namedtuple("inner_circle", ["inner", "px", "py", "px2", "py2", "el"])
 
-    dist = P192.getNumberAsCurvePoint(17)
-
-    return el.decrypt(result) == dist 
-
-
+    return tup(inner, pointX, pointY, pointXSquare, pointYSquare, el)
 
 if __name__ == "__main__":
     unittest.main()

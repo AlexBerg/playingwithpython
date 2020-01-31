@@ -1,9 +1,6 @@
 import ecc
 from ecc.utilities import *
 
-class _Modular(FieldElement):
-    NotImplemented
-
 @memoize
 def Mod(p):
     class ModP(FieldElement):

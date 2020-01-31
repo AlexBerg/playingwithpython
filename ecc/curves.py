@@ -65,7 +65,7 @@ class Curve:
     def getCurvePointAsNumber(self, point):
         i = 0
         while(i < self.N):
-            if(self.G * i == point):
+            if((self.G * i) == point):
                 break
             i += 1
         return i

@@ -51,7 +51,7 @@ class Point:
                 while i <= n:
                     Q = Q + Q
 
-                    if n & i == 1:
+                    if n & i == i:
                         R = Q + R
 
                     i = i << 1

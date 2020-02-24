@@ -4,7 +4,7 @@ import ecc.point as point
 
 
 class Elgamal:
-    def __init__(self, curve):
+    def __init__(self, curve = curves.P192):
         if not isinstance(curve, curves.Curve):
             raise Exception("curve must be instance of Curve")
         else:
